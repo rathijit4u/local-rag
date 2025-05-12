@@ -55,13 +55,12 @@ class MilvusUtil:
     def insert_docs_milvus_db(self, docs, collection_name="demo_collection"):
         client = self.get_milvus_client(self.milvus_instance_uri, self.milvus_token)
         vectors = self.embedding_fn.encode_documents(docs)
-        data = [{"vector": vectors[i], "text": docs[i], "subject": "history"} for i in range(len(vectors))]
+        data = [{"vector": vectors[i], "text": docs[i]} for i in range(len(vectors))]
         self.create_collection_milvus_db(client, collection_name)
         res = client.insert(collection_name=collection_name, data=data)
         client.close()
-        self.logger.info(res) 
-        
-        
+        self.logger.debug(res) 
+                
     def search_milvus_db(self, query_text_arr, collection="demo_collection", result_limit=2, output_fields=["text", "subject"]):
         try:
             client = self.get_milvus_client(self.milvus_instance_uri, self.milvus_token)
@@ -83,10 +82,10 @@ class MilvusUtil:
 if __name__=="__main__":
     milvus_util = MilvusUtil()
     milvus_util.logger.info("Start")
-    milvus_util.insert_docs_milvus_db(["During World War II, Turing worked for the Government Code and Cypher School at Bletchley Park, Britain's codebreaking centre that produced Ultra intelligence.",
+    """ milvus_util.insert_docs_milvus_db(["During World War II, Turing worked for the Government Code and Cypher School at Bletchley Park, Britain's codebreaking centre that produced Ultra intelligence.",
                            "Artificial intelligence was founded as an academic discipline in 1956.",
     "Alan Turing was the first person to conduct substantial research in AI.",
     "Born in Maida Vale, London, Turing was raised in southern England."], "new_collection_1" )
-    milvus_util.insert_docs_milvus_db(["Alan Turing was a good human being."], "new_collection_1" ) 
+    milvus_util.insert_docs_milvus_db(["Alan Turing was a good human being."], "new_collection_1" )  """
     
     milvus_util.logger.info(milvus_util.search_milvus_db(["who is Alan Turing?"],"new_collection_1", 3))
