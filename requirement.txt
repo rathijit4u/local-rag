@@ -1,3 +1,5 @@
+setuptools
+wheel
 langchain-text-splitters
 langchain-community
 langgraph
@@ -6,3 +8,4 @@ langchain-core
 sentence-transformers
 pymilvus
 pymilvus[model]
+spacy[cuda12x]
