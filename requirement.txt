@@ -9,3 +9,5 @@ sentence-transformers
 pymilvus
 pymilvus[model]
 spacy[cuda12x]
+markdown
+beautifulsoup4
